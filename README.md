@@ -11,7 +11,10 @@ aftger it has been deployed, you can remove it
 
 cdk destroy
 ```
+## Python dependencies
 
+aws_requirements.txt are only for deployment via cdk
+src/requirements.txt  is fastapi dependencies
 
 ## Testing
 ```angular2html
