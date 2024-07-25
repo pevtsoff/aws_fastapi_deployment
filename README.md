@@ -1,5 +1,7 @@
-## Fastapi Deployment with DynamoDB and CDK
+## Fastapi Deployment with DynamoDB using CDK
 This is a template for FastAPI App deployment into AWS with DynamoDB
+
+
 ## Run
 ```angular2html
 cd cdk
