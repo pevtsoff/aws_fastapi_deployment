@@ -8,7 +8,8 @@
                 "iam:*",
                 "ssm:*",
                 "s3:*",
-                "ecr:*"
+                "ecr:*",
+                "dynamodb:*"
             ],
             "Resource": "*"
         }

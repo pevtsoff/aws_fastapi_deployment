@@ -1,6 +1,10 @@
-from aws_cdk import Stack
+from aws_cdk import (
+    Stack,
+    RemovalPolicy,
+    aws_iam as iam
+)
 from constructs import Construct
-
+import aws_cdk.aws_dynamodb as dynamodb
 import aws_cdk.aws_ec2 as ec2
 import aws_cdk.aws_ecs as ecs
 import aws_cdk.aws_ecs_patterns as ecs_patterns
@@ -18,6 +22,15 @@ class FastAPIStack(Stack):
             self,
             "MyECSCluster",
             vpc=self.vpc,
+        )
+        # createa dynamodb table
+        self.table = dynamodb.Table(
+            self,
+            "MessagesTable",
+            table_name="Messages",  # Explicit table name
+            partition_key={"name": "id", "type": dynamodb.AttributeType.STRING},
+            removal_policy=RemovalPolicy.DESTROY,
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST
         )
 
         # (iii) Define Docker image for the Service
@@ -37,3 +50,13 @@ class FastAPIStack(Stack):
             desired_count=2,
             task_image_options=image,
         )
+
+        self.ecs_service.task_definition.task_role.add_to_policy(
+            statement=iam.PolicyStatement(
+                actions=["dynamodb:*"],
+                resources=[self.table.table_arn],
+                effect=iam.Effect.ALLOW,
+            )
+        )
+
+        self.table.grant_read_write_data(self.ecs_service.task_definition.task_role)
