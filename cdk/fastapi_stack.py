@@ -51,12 +51,4 @@ class FastAPIStack(Stack):
             task_image_options=image,
         )
 
-        self.ecs_service.task_definition.task_role.add_to_policy(
-            statement=iam.PolicyStatement(
-                actions=["dynamodb:*"],
-                resources=[self.table.table_arn],
-                effect=iam.Effect.ALLOW,
-            )
-        )
-
         self.table.grant_read_write_data(self.ecs_service.task_definition.task_role)
