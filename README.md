@@ -13,8 +13,8 @@ cdk destroy
 ```
 ## Python dependencies
 
-aws_requirements.txt are only for deployment via cdk
-src/requirements.txt  is fastapi dependencies
+1. aws_requirements.txt are only for deployment via cdk
+2. src/requirements.txt  is fastapi dependencies
 
 ## Testing
 ```angular2html
